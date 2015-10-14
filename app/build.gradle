@@ -1,26 +1,39 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.model.application'
+model {
+    android {
+        compileSdkVersion = 23
+        buildToolsVersion = "23.0.1"
 
-android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+        defaultConfig.with {
+            applicationId = "io.serniorzhao.as_ndk"
+            minSdkVersion.apiLevel = 14
+            targetSdkVersion.apiLevel = 23
+            versionCode = 1
+            versionName = "1.0"
+        }
 
-    defaultConfig {
-        applicationId "io.serniorzhao.as_ndk"
-        minSdkVersion 14
-        targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
     }
-    buildTypes {
+
+    android.buildTypes {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            minifyEnabled = false
+            proguardFiles += file('proguard-rules.txt')
         }
     }
+
+    android.ndk {
+        moduleName = "hello-jni"
+    }
+
+    compileOptions.with {
+        sourceCompatibility = JavaVersion.VERSION_1_7
+        targetCompatibility = JavaVersion.VERSION_1_7
+    }
+
 }
+
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.0.1'
 }
